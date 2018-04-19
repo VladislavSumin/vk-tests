@@ -25,5 +25,14 @@ public class DebugConfiguration {
                         .authorities(Collections.singletonList(Role.USER))
                         .build()
         );
+
+        //Crate Admin user
+        userRepository.save(
+                User.builder()
+                        .username("admin")
+                        .password(passwordEncoder.encode("123"))
+                        .authorities(Collections.singletonList(Role.ADMIN))
+                        .build()
+        );
     }
 }
