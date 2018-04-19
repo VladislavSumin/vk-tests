@@ -1,5 +1,6 @@
 package ru.falseteam.vktests.entity;
 
+import com.sun.javafx.collections.ImmutableObservableList;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ public class User implements UserDetails {
 
 
     @Transient
-    private List<GrantedAuthority> authorities;
+    private List<GrantedAuthority> authorities = new ImmutableObservableList<>(Role.USER);
     @Transient
     private boolean accountNonExpired = true;
     @Transient
