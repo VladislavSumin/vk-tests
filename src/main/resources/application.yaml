@@ -1,5 +1,6 @@
 spring:
   datasource:
+    # TODO add ssl
     url: "jdbc:mysql://192.168.170.135:3306/vk_tests?useSSL=false"
     username: "vk_tests"
     password: "vk_tests"
@@ -10,7 +11,7 @@ spring:
     hibernate:
       # TODO поменять на validate после тестов
       ddl-auto: create
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        dialect: "MySQL5InnoDBDialect"
+      use-new-id-generator-mappings: true
+    # TODO посмотреть подробно что это
+    open-in-view: true
+    database-platform: "org.hibernate.dialect.MySQL5InnoDBDialect"
