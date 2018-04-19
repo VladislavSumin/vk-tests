@@ -3,10 +3,15 @@ package ru.falseteam.vktests;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Main entry point
+ * @author Sumin Vladislav
+ * @version 1.0
+ */
 @SpringBootApplication
-public class VktestsApplication {
+public class VkTestsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(VktestsApplication.class, args);
+        SpringApplication.run(VkTestsApplication.class, args);
     }
 }
