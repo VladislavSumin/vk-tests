@@ -4,9 +4,6 @@ spring:
     url: "jdbc:mysql://192.168.170.135:3306/vk_tests?useSSL=false"
     username: "vk_tests"
     password: "vk_tests"
-  security:
-    user:
-      password: "password"
   jpa:
     hibernate:
       # TODO поменять на validate после тестов
