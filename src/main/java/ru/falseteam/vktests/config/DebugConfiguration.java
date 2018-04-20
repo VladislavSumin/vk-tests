@@ -20,35 +20,56 @@ public class DebugConfiguration {
             UserRepository userRepository,
             GroupRepository groupRepository) {
 
-        Group group = Group.builder()
+        Group adminGroup = Group.builder()
                 .name("Admins")
-                .role("ADMIN")
+                .role(Role.ADMIN)
                 .build();
-        groupRepository.save(group);
+        Group teacherGroup = Group.builder()
+                .name("Teachers")
+                .role(Role.TEACHER)
+                .build();
+        Group userGroup = Group.builder()
+                .name("Users")
+                .role(Role.USER)
+                .build();
 
-        //Crate User
-        userRepository.save(
-                User.builder()
-                        .username("user")
-                        .password(passwordEncoder.encode("123"))
-                        .authorities(Collections.singletonList(Role.USER))
-                        .firstName("user")
-                        .lastName("user")
-                        .soname("user")
-                        .group(group)
-                        .build()
-        );
+        groupRepository.save(adminGroup);
+        groupRepository.save(teacherGroup);
+        groupRepository.save(userGroup);
 
         //Crate Admin user
         userRepository.save(
                 User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("123"))
-                        .authorities(Collections.singletonList(Role.ADMIN))
                         .firstName("admin")
                         .lastName("admin")
                         .soname("admin")
-                        .group(group)
+                        .group(adminGroup)
+                        .build()
+        );
+
+        //Crate Teacher
+        userRepository.save(
+                User.builder()
+                        .username("teacher")
+                        .password(passwordEncoder.encode("123"))
+                        .firstName("teacher")
+                        .lastName("teacher")
+                        .soname("teacher")
+                        .group(teacherGroup)
+                        .build()
+        );
+
+        //Crate User
+        userRepository.save(
+                User.builder()
+                        .username("user")
+                        .password(passwordEncoder.encode("123"))
+                        .firstName("user")
+                        .lastName("user")
+                        .soname("user")
+                        .group(userGroup)
                         .build()
         );
     }

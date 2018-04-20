@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * @author Sumin Vladislav
+ * @version 1.0
+ */
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,6 +26,7 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String role;
+    @Column(nullable = false)
+    //@Enumerated(EnumType.STRING)
+    private Role role;
 }

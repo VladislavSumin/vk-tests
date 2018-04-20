@@ -5,19 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.websocket.OnOpen;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Sumin Vladislav
- * @version 1.1
+ * @version 1.3
  */
 @Data
 @Entity
@@ -45,13 +45,13 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String soname;
 
-    @OneToOne()
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Group group;
 
 
-    @Transient
-    private List<GrantedAuthority> authorities = new ImmutableObservableList<>(Role.USER);
+    //    @Transient
+//    private List<GrantedAuthority> authorities = new ImmutableObservableList<>(Role.USER);
     @Transient
     private boolean accountNonExpired = true;
     @Transient
@@ -60,4 +60,9 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired = true;
     @Transient
     private boolean enabled = true;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(group.getRole());
+    }
 }
