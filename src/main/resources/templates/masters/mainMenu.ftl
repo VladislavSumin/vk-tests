@@ -12,6 +12,7 @@
 <body>
     <#include "header.ftl">
 <#nested>
+    <#include "footer.ftl">
 </body>
 
 </html>

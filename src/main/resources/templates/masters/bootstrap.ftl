@@ -13,17 +13,12 @@
 <#--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
 <#--crossorigin="anonymous"></script>-->
 
-
-      <!-- Bootstrap. @see version in pom.xml -->
-<#--<link href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"-->
-<#--rel="stylesheet" media="screen"/>-->
-<#--<script href="/webjars/jquery/3.0.0/jquery.js"></script>-->
-<#--<script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script> -->
-
       <!-- Bootstrap. @see version in pom.xml -->
       <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
             rel="stylesheet" media="screen"/>
       <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css"
+            rel="stylesheet" media="screen"/>
+      <link href="/css/sticky-footer.css"
             rel="stylesheet" media="screen"/>
       <script src="/webjars/jquery/1.11.1/jquery.js"></script>
       <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
