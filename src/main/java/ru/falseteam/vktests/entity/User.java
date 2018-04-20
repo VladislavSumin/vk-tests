@@ -5,10 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.websocket.OnOpen;
 import java.util.List;
 
 /**
@@ -31,6 +35,19 @@ public class User implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String soname;
+
+    @OneToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Group group;
 
 
     @Transient
