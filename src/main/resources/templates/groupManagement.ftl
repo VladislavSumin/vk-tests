@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="panel panel-default">
-        <div class="panel-heading">Panel heading</div>
+        <div class="panel-heading">Список групп</div>
 
         <table class="table table-hover">
             <thead>
@@ -18,10 +18,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="" onclick="window.location.href='/'">
-                <th>1</th>
-                <th>Взвод 3017</th>
+            <#assign x = 1>
+            <#list groups as group>
+            <#--TODO пофиксить жирный текст-->
+            <tr>
+                <th scope="row">${x}</th>
+                <th style="font-weight:300">${group.name}</th>
             </tr>
+                <#assign x++>
+            </#list>
             </tbody>
         </table>
     </div>
