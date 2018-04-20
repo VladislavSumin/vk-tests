@@ -9,8 +9,6 @@ import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
 import ru.falseteam.vktests.repository.UserRepository;
 
-import java.util.Collections;
-
 @Configuration
 public class DebugConfiguration {
 
@@ -22,15 +20,15 @@ public class DebugConfiguration {
 
         Group adminGroup = Group.builder()
                 .name("Администраторы")
-                .role(Role.ADMIN)
+                .role(Role.ROLE_ADMIN)
                 .build();
         Group teacherGroup = Group.builder()
                 .name("Преподаватели")
-                .role(Role.TEACHER)
+                .role(Role.ROLE_TEACHER)
                 .build();
         Group userGroup = Group.builder()
                 .name("Пользователи")
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
 
         groupRepository.save(adminGroup);
