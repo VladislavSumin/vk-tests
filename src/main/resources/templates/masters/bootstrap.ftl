@@ -20,5 +20,7 @@
             rel="stylesheet" media="screen"/>
       <link href="/css/sticky-footer.css"
             rel="stylesheet" media="screen"/>
+      <link href="/css/dashboard.css"
+            rel="stylesheet" media="screen"/>
       <script src="/webjars/jquery/1.11.1/jquery.js"></script>
       <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
