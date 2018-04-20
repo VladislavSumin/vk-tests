@@ -1,4 +1,5 @@
 <#macro menu title>
+    <#include "header.ftl">
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -10,7 +11,7 @@
 </head>
 
 <body>
-    <#include "header.ftl">
+    <@header/>
 <div class="container-fluid">
     <div class="row">
         <#include "menu.ftl">

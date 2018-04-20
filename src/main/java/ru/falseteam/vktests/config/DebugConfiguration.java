@@ -21,15 +21,15 @@ public class DebugConfiguration {
             GroupRepository groupRepository) {
 
         Group adminGroup = Group.builder()
-                .name("Admins")
+                .name("Администраторы")
                 .role(Role.ADMIN)
                 .build();
         Group teacherGroup = Group.builder()
-                .name("Teachers")
+                .name("Преподаватели")
                 .role(Role.TEACHER)
                 .build();
         Group userGroup = Group.builder()
-                .name("Users")
+                .name("Пользователи")
                 .role(Role.USER)
                 .build();
 
@@ -42,9 +42,9 @@ public class DebugConfiguration {
                 User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("123"))
-                        .firstName("admin")
-                        .lastName("admin")
-                        .soname("admin")
+                        .firstName("Иван")
+                        .lastName("Иванов")
+                        .soname("Иванович")
                         .group(adminGroup)
                         .build()
         );

@@ -1,17 +1,21 @@
 package ru.falseteam.vktests.mappers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.falseteam.vktests.entity.User;
 
 @Controller
 @RequestMapping("/")
 public class RootMapper {
 
     @GetMapping("/")
-    public String getIndex() {
+    public String getIndex(Model model, Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("user", user);
         return "index";
     }
 

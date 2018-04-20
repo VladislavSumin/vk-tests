@@ -1,3 +1,4 @@
+<#macro header>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -13,9 +14,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Имя пользователя</a></li>
+                <li><a href="/">${user.username} </a></li>
+                <li><a href="/">${user.group.name}</a></li>
                 <li><a href="/logout">Выход</a></li>
             </ul>
         </div>
     </div>
 </nav>
+</#macro>
