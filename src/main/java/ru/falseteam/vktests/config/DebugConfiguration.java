@@ -117,5 +117,40 @@ public class DebugConfiguration {
                         .question(question)
                         .isRight(false)
                         .build());
+
+
+
+        question = TestQuestion.builder()
+                .question("Вопрос 2")
+                .test(test)
+                .build();
+        testQuestionRepository.save(question);
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 1")
+                        .question(question)
+                        .isRight(true)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 2")
+                        .question(question)
+                        .isRight(false)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 3")
+                        .question(question)
+                        .isRight(false)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 4")
+                        .question(question)
+                        .isRight(false)
+                        .build());
     }
 }
