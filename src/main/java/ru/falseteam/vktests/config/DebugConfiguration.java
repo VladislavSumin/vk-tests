@@ -5,15 +5,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.falseteam.vktests.entity.Group;
 import ru.falseteam.vktests.entity.Role;
+import ru.falseteam.vktests.entity.Test;
 import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
+import ru.falseteam.vktests.repository.TestRepository;
 import ru.falseteam.vktests.repository.UserRepository;
+
+import java.sql.Time;
+import java.util.Date;
 
 @Configuration
 public class DebugConfiguration {
 
     @Autowired
-    public DebugConfiguration(
+    void createUsersAndGroups(
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
             GroupRepository groupRepository) {
@@ -70,5 +75,14 @@ public class DebugConfiguration {
                         .group(userGroup)
                         .build()
         );
+    }
+
+    @Autowired
+    void createTests(TestRepository testRepository) {
+        Test test = Test.builder()
+                .name("Тест 1")
+                .timeLimit(new Date(10 * 60 * 1000))
+                .build();
+        testRepository.save(test);
     }
 }
