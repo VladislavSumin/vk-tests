@@ -74,7 +74,7 @@ public class GroupMapper {
     }
 
     @GetMapping("/group/info/{id}")
-    public String getGroupAdd(Model model, Authentication auth,
+    public String getGroupInfo(Model model, Authentication auth,
                               @PathVariable Long id) {
         User user = (User) auth.getPrincipal();
         model.addAttribute("user", user);

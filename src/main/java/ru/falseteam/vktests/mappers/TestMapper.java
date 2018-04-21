@@ -6,28 +6,27 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.falseteam.vktests.entity.Group;
-import ru.falseteam.vktests.entity.Role;
-import ru.falseteam.vktests.entity.Test;
-import ru.falseteam.vktests.entity.User;
+import ru.falseteam.vktests.PageNotFoundException;
+import ru.falseteam.vktests.entity.*;
+import ru.falseteam.vktests.repository.TestQuestionRepository;
 import ru.falseteam.vktests.repository.TestRepository;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/test")
 @Secured("ROLE_ADMIN")
 public class TestMapper {
     private final TestRepository testRepository;
+    private final TestQuestionRepository testQuestionRepository;
 
     @Autowired
-    public TestMapper(TestRepository testRepository) {
+    public TestMapper(TestRepository testRepository, TestQuestionRepository testQuestionRepository) {
         this.testRepository = testRepository;
+        this.testQuestionRepository = testQuestionRepository;
     }
 
     @GetMapping("/management")
@@ -68,5 +67,20 @@ public class TestMapper {
         }
 
         return "redirect:/admin/test/management";
+    }
+
+    @GetMapping("/info/{id}")
+    public String getGroupInfo(Model model, Authentication auth,
+                               @PathVariable Long id) {
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("user", user);
+
+        Test test = testRepository.findById(id).orElseThrow(PageNotFoundException::new);
+        model.addAttribute("test", test);
+        Iterable<TestQuestion> questions = testQuestionRepository.findAllByTest(test);
+        model.addAttribute("questions", questions);
+
+
+        return "testInfo";
     }
 }

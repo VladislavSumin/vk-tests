@@ -1,10 +1,6 @@
 package ru.falseteam.vktests.entity;
 
-import com.sun.javafx.collections.ImmutableObservableList;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,13 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Sumin Vladislav
- * @version 1.3
+ * @version 1.4
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 @Builder
