@@ -2,8 +2,7 @@
 <@menu title="Main page">
 <div class="row">
     <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default">Новая группа</button>
-    <#--<button onclick="window.location.href='/lol'" type="button" class="btn btn-default">Right</button>-->
+        <button onclick="window.location.href='/admin/group/add'" type="button" class="btn btn-default">Новая группа</button>
     </div>
 </div>
 <div class="row">
