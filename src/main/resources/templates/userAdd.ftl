@@ -15,7 +15,7 @@
             <input name="group_id" value="${group.id}" type="hidden">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Фамилия"
-                       name="secondName">
+                       name="lastName">
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Имя"

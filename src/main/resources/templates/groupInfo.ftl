@@ -2,10 +2,17 @@
 <@menu title="Main page">
 <div class="row">
     <div class="btn-group" role="group" aria-label="...">
-        <button onclick="window.location.href='/admin/user/add?group_id=${group.id}'" type="button" class="btn btn-default">Добавить
-            пользователя
+        <button onclick="window.location.href='/admin/user/add?group_id=${group.id}'" type="button"
+                class="btn btn-default">Добавить пользователя
         </button>
     </div>
+<#--TODO тут чет все криво-->
+    <form class="btn-group" action="/admin/user/generate_password" method="post">
+        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+        <input type="hidden" name="group_id" value="${group.id}">
+        <button type="submit" class="btn btn-default">Сгенерировать пароли</button>
+    </form>
+
 </div>
 <div class="row">
     <div class="panel panel-default">
