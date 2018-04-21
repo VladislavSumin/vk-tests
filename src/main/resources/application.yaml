@@ -1,7 +1,7 @@
 spring:
   datasource:
     # TODO add ssl
-    url: "jdbc:mysql://192.168.170.135:3306/vk_tests?useSSL=false&useUnicode=yes&characterEncoding=UTF-8"
+    url: "jdbc:mysql://192.168.170.135:3306/vk_tests?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=false"
     username: "vk_tests"
     password: "vk_tests"
   jpa:

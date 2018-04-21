@@ -12,5 +12,6 @@ public class Config {
     @Autowired
     void config() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC+3:00"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 }
