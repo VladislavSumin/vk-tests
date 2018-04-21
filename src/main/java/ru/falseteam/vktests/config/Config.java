@@ -9,6 +9,7 @@ import java.util.TimeZone;
 @Configuration()
 @Priority(999)
 public class Config {
+    //TODO разобаться с этим моментом
     @Autowired
     void config() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC+3:00"));

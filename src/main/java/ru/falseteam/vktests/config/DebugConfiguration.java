@@ -3,16 +3,12 @@ package ru.falseteam.vktests.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.falseteam.vktests.entity.Group;
-import ru.falseteam.vktests.entity.Role;
-import ru.falseteam.vktests.entity.Test;
-import ru.falseteam.vktests.entity.User;
-import ru.falseteam.vktests.repository.GroupRepository;
-import ru.falseteam.vktests.repository.TestRepository;
-import ru.falseteam.vktests.repository.UserRepository;
+import ru.falseteam.vktests.entity.*;
+import ru.falseteam.vktests.repository.*;
 
-import java.sql.Time;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 public class DebugConfiguration {
@@ -78,11 +74,48 @@ public class DebugConfiguration {
     }
 
     @Autowired
-    void createTests(TestRepository testRepository) {
+    void createTests(
+            TestRepository testRepository,
+            TestQuestionRepository testQuestionRepository,
+            TestQuestionAnswerRepository testQuestionAnswerRepository) {
         Test test = Test.builder()
                 .name("Тест 1")
                 .timeLimit(new Date(10 * 60 * 1000))
                 .build();
         testRepository.save(test);
+
+        TestQuestion question = TestQuestion.builder()
+                .question("Вопрос 1")
+                .test(test)
+                .build();
+        testQuestionRepository.save(question);
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 1")
+                        .question(question)
+                        .isRight(true)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 2")
+                        .question(question)
+                        .isRight(false)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 3")
+                        .question(question)
+                        .isRight(false)
+                        .build());
+
+        testQuestionAnswerRepository.save(
+                TestQuestionAnswer.builder()
+                        .answer("Ответ 4")
+                        .question(question)
+                        .isRight(false)
+                        .build());
     }
 }
