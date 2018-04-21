@@ -2,11 +2,8 @@ package ru.falseteam.vktests.mappers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +19,17 @@ import java.util.Optional;
 
 /**
  * @author Sumin Vladislav
- * @version 0.1
+ * @version 1.0
  */
 @Controller
 @RequestMapping("/admin")
 @Secured("ROLE_ADMIN")
-public class AdminMapper {
+public class GroupMapper {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public AdminMapper(GroupRepository groupRepository, UserRepository userRepository) {
+    public GroupMapper(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
     }
@@ -83,7 +80,9 @@ public class AdminMapper {
         model.addAttribute("user", user);
 
         Optional<Group> group = groupRepository.findById(id);
-        Iterable<User> users = userRepository.findAllByGroup(group.orElseThrow(PageNotFoundException::new));
+        model.addAttribute("group", group.orElseThrow(PageNotFoundException::new));
+
+        Iterable<User> users = userRepository.findAllByGroup(group.get());
         model.addAttribute("users", users);
 
         return "groupInfo";

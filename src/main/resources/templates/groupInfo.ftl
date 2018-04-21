@@ -1,14 +1,15 @@
 <#include "masters/mainMenu.ftl">
 <@menu title="Main page">
-<#--<div class="row">-->
-    <#--<div class="btn-group" role="group" aria-label="...">-->
-        <#--<button onclick="window.location.href='/admin/group/add'" type="button" class="btn btn-default">Новая группа-->
-        <#--</button>-->
-    <#--</div>-->
-<#--</div>-->
+<div class="row">
+    <div class="btn-group" role="group" aria-label="...">
+        <button onclick="window.location.href='/admin/user/add?group_id=${group.id}'" type="button" class="btn btn-default">Добавить
+            пользователя
+        </button>
+    </div>
+</div>
 <div class="row">
     <div class="panel panel-default">
-        <div class="panel-heading">Участники группы</div>
+        <div class="panel-heading">Участники группы ${group.name}</div>
 
         <table class="table table-hover">
             <thead>
