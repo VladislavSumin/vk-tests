@@ -20,7 +20,7 @@
             <#assign x = 1>
             <#list groups as group>
             <#--TODO пофиксить жирный текст-->
-            <tr>
+            <tr onclick="window.location.href='/admin/group/info/${group.id}'">
                 <th scope="row">${x}</th>
                 <th style="font-weight:300">${group.name}</th>
             </tr>

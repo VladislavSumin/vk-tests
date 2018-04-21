@@ -2,19 +2,23 @@ package ru.falseteam.vktests.mappers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.falseteam.vktests.PageNotFoundException;
 import ru.falseteam.vktests.entity.Group;
 import ru.falseteam.vktests.entity.Role;
 import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
+import ru.falseteam.vktests.repository.UserRepository;
+
+import java.util.Optional;
 
 /**
  * @author Sumin Vladislav
@@ -25,10 +29,12 @@ import ru.falseteam.vktests.repository.GroupRepository;
 @Secured("ROLE_ADMIN")
 public class AdminMapper {
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AdminMapper(GroupRepository groupRepository) {
+    public AdminMapper(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/group/management")
@@ -54,7 +60,6 @@ public class AdminMapper {
     @PostMapping("/group/add")
     public String postGroupAdd(RedirectAttributes attributes,
                                @RequestParam(name = "name") String groupName) {
-
         try {
             //TODO fix log error on use this method
             groupRepository.save(
@@ -69,5 +74,18 @@ public class AdminMapper {
         }
 
         return "redirect:/admin/group/management";
+    }
+
+    @GetMapping("/group/info/{id}")
+    public String getGroupAdd(Model model, Authentication auth,
+                              @PathVariable Long id) {
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("user", user);
+
+        Optional<Group> group = groupRepository.findById(id);
+        Iterable<User> users = userRepository.findAllByGroup(group.orElseThrow(PageNotFoundException::new));
+        model.addAttribute("users", users);
+
+        return "groupInfo";
     }
 }
