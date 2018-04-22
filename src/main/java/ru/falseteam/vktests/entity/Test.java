@@ -23,8 +23,7 @@ public class Test {
     private String name;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date timeLimit;
+    private long timeLimit;
 
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
     private Set<TestQuestion> questions;

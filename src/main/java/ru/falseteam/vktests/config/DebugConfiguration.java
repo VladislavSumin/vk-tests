@@ -93,7 +93,7 @@ public class DebugConfiguration {
             TestQuestionAnswerRepository testQuestionAnswerRepository) {
         Test test = Test.builder()
                 .name("Тест 1")
-                .timeLimit(new Date(10 * 60 * 1000))
+                .timeLimit(10 * 60 * 1000)
                 .build();
         testRepository.save(test);
 

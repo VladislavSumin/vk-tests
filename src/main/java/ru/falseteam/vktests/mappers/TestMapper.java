@@ -65,7 +65,7 @@ public class TestMapper {
             testRepository.save(
                     Test.builder()
                             .name(testName)
-                            .timeLimit(new Date(timeLimit * 60 * 1000))
+                            .timeLimit(timeLimit * 60 * 1000)
                             .build()
             );
         } catch (DataIntegrityViolationException e) {
