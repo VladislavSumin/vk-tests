@@ -15,7 +15,7 @@
             <tr>
                 <th>#</th>
                 <th>Теста группы</th>
-                <th>Лимит времени (ms)</th>
+                <th>Лимит времени</th>
             </tr>
             </thead>
             <tbody>
@@ -25,7 +25,10 @@
             <tr onclick="window.location.href='/admin/test/info/${test.id}'">
                 <th scope="row">${x}</th>
                 <th style="font-weight:300">${test.name}</th>
-                <th style="font-weight:300">${test.timeLimit}</th>
+                <#setting time_zone = "UTC">
+                <th style="font-weight:300">${test.timeLimit?number_to_time}</th>
+                <#setting time_zone = "Europe/Moscow">
+
             </tr>
                 <#assign x++>
             </#list>

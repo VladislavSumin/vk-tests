@@ -21,7 +21,9 @@
             <tr>
                 <th scope="row">${x}</th>
                 <th style="font-weight:300">${task.test.name}</th>
-                <th style="font-weight:300">${task.test.timeLimit}</th>
+                <#setting time_zone = "UTC">
+                <th style="font-weight:300">${task.test.timeLimit?number_to_time}</th>
+                <#setting time_zone = "Europe/Moscow">
                 <th style="font-weight:300">${task.endTime}</th>
                 <th style="font-weight:300">
                     <form method="post">
