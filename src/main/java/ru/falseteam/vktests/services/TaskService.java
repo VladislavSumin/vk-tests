@@ -65,20 +65,31 @@ public class TaskService {
 
 
         model.addAttribute("question", taskExecution.getQuestion());
+        model.addAttribute("countQuestion", taskExecution.countQuestion);
+        model.addAttribute("answeredQuestion",
+                taskExecution.countQuestion - taskExecution.questions_id.size());
+        model.addAttribute("rightAnswers", taskExecution.rightAnswers);
+        model.addAttribute("time", taskExecution.endTime);
         return "taskExecution";
     }
 
     private class TaskExecution implements Runnable {
         List<Long> questions_id = new LinkedList<>();
-        long user_id;
-        long task_id;
+        int countQuestion;
+        int rightAnswers = 0;
+        long userId;
+        long taskId;
+        Date endTime;
 
         TaskExecution(User user, Task task) {
-            user_id = user.getId();
-            task_id = task.getId();
+            userId = user.getId();
+            taskId = task.getId();
 
             task.getTest().getQuestions().forEach(testQuestion -> questions_id.add(testQuestion.getId()));
             Collections.shuffle(questions_id, new Random());
+            countQuestion = questions_id.size();
+
+            endTime = new Date(System.currentTimeMillis() + task.getTest().getTimeLimit());
 
             taskExecutions.put(user.getId(), this);
             //TODO удаление через 10 минут
