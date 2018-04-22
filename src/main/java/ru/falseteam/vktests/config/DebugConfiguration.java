@@ -164,6 +164,9 @@ public class DebugConfiguration {
                         .question(question)
                         .isRight(false)
                         .build());
+
+        Test test2 = testRepository.findById(1L).orElseThrow(RuntimeException::new);
+        System.out.println("Время на выполнение теста: " + test2.getTimeLimit());
     }
 
 
@@ -181,5 +184,10 @@ public class DebugConfiguration {
                         .endTime(c.getTime())
                         .build()
         );
+
+        System.out.println("Календарь вернул: " + c.getTime());
+        Task task = taskRepository.findById(1L).orElseThrow(RuntimeException::new);
+        System.out.println("Бд вернула: " + task.getEndTime());
+
     }
 }

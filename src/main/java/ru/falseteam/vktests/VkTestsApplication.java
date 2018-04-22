@@ -3,6 +3,8 @@ package ru.falseteam.vktests;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.TimeZone;
+
 /**
  * Main entry point
  * @author Sumin Vladislav

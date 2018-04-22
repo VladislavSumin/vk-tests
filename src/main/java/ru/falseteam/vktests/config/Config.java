@@ -12,7 +12,6 @@ public class Config {
     //TODO разобаться с этим моментом
     @Autowired
     void config() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC+3:00"));
-        //TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Moscow"));
     }
 }
