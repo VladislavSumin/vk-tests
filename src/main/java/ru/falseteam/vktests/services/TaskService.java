@@ -1,38 +1,44 @@
 package ru.falseteam.vktests.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import ru.falseteam.vktests.PageNotFoundException;
-import ru.falseteam.vktests.entity.Task;
-import ru.falseteam.vktests.entity.TestQuestion;
-import ru.falseteam.vktests.entity.User;
+import ru.falseteam.vktests.entity.*;
 import ru.falseteam.vktests.repository.TaskRepository;
+import ru.falseteam.vktests.repository.TaskResultRepository;
 import ru.falseteam.vktests.repository.TestQuestionRepository;
-import ru.falseteam.vktests.repository.TestRepository;
+import ru.falseteam.vktests.repository.UserRepository;
 
 import javax.annotation.PreDestroy;
+import javax.jws.soap.SOAPBinding;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
+    private final TaskResultRepository taskResultRepository;
     private final TestQuestionRepository testQuestionRepository;
     private final ScheduledExecutorService scheduledExecutorService;
 
     private final Map<Long, TaskExecution> taskExecutions = new ConcurrentHashMap<>();
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, TestQuestionRepository testQuestionRepository) {
+    public TaskService(
+            TaskRepository taskRepository,
+            TestQuestionRepository testQuestionRepository,
+            UserRepository userRepository,
+            TaskResultRepository taskResultRepository) {
         this.taskRepository = taskRepository;
         this.testQuestionRepository = testQuestionRepository;
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        this.userRepository = userRepository;
+        this.taskResultRepository = taskResultRepository;
     }
 
     @PreDestroy
@@ -43,7 +49,10 @@ public class TaskService {
 
     public String getView(Model model, User user) {
         if (taskExecutions.get(user.getId()) == null) {
-            Iterable<Task> tasks = taskRepository.findAllByGroupAndEndTimeAfter(user.getGroup(), new Date());
+            List<Task> tasks = new LinkedList<>();
+            Iterable<Task> tasks_ = taskRepository.findAllByGroupAndEndTimeAfter(user.getGroup(), new Date());
+            tasks_.iterator().forEachRemaining(tasks::add);
+            taskResultRepository.findAllByUser(user).forEach(taskResult -> tasks.remove(taskResult.getTask()));
             model.addAttribute("tasks", tasks);
             return "taskList";
         }
@@ -71,6 +80,44 @@ public class TaskService {
         model.addAttribute("rightAnswers", taskExecution.rightAnswers);
         model.addAttribute("time", taskExecution.endTime);
         return "taskExecution";
+    }
+
+    public String questionAnswer(User user, long questionId, Map<Long, Boolean> answers) {
+        TaskExecution taskExecution = taskExecutions.get(user.getId());
+        if (taskExecution == null) return "redirect:/test";
+        Long questionId_ = taskExecution.questions_id.get(0);
+        if (!questionId_.equals(questionId)) throw new PageNotFoundException();
+
+        TestQuestion testQuestion = testQuestionRepository.findById(questionId).orElseThrow(PageNotFoundException::new);
+        Set<TestQuestionAnswer> answers1 = testQuestion.getAnswers();
+
+        answers.entrySet().removeIf(e -> !e.getValue());
+        answers1.removeIf(a -> !a.isRight());
+
+        if (answers.size() == answers1.size()) {
+            AtomicBoolean err = new AtomicBoolean(false);
+            answers1.forEach(testQuestionAnswer -> {
+                if (answers.get(testQuestionAnswer.getId()) == null)
+                    err.set(true);
+            });
+            if (!err.get()) taskExecution.rightAnswers++;
+        }
+        taskExecution.questions_id.remove(0);
+        if (taskExecution.questions_id.size() == 0) {
+            Task task = taskRepository.findById(taskExecution.taskId).orElseThrow(PageNotFoundException::new);
+            taskResultRepository.save(
+                    TaskResult.builder()
+                            .user(user)
+                            .task(task)
+                            .countQuestions(taskExecution.countQuestion)
+                            .rightAnswers(taskExecution.rightAnswers)
+                            .build()
+            );
+            taskExecutions.remove(user.getId());
+            return "redirect:/task";
+        }
+
+        return "redirect:/task/execution";
     }
 
     private class TaskExecution implements Runnable {
