@@ -2,7 +2,7 @@
 <@menu title="Main page">
 <div class="panel panel-default" style="margin-top:45px">
     <div class="panel-heading">
-        <h3 class="panel-title">Вопрос</h3>
+        <h3 class="panel-title">${question.question}</h3>
     </div>
     <div class="panel-body">
 
@@ -13,7 +13,6 @@
         <form method="post">
             <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
             <input name="question_id" value="${question.id}" type="hidden">
-            <label>${question.question}</label>
             <#assign x = 1>
             <#list question.answers as answer>
             <div class="form-group">
@@ -23,6 +22,7 @@
                     <input type="checkbox" name="answer_${x}_is_right">
                     ${answer.answer}
                 </label>
+            </div>
                 <#assign x++>
             </#list>
             <button type="submit" class="btn btn-default">Ответить</button>
