@@ -2,18 +2,20 @@ package ru.falseteam.vktests;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class Test {
+public class Test implements Runnable {
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
-        Calendar gmt = Calendar.getInstance();
-        gmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.schedule(new Test(), 1, TimeUnit.SECONDS);
+        scheduledExecutorService.shutdownNow();
+        scheduledExecutorService.shutdown();
+    }
 
-        Calendar msk = Calendar.getInstance();
-        msk.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
-
-        System.out.println(gmt.getTime());
-        System.out.println(msk.getTime());
-
+    @Override
+    public void run() {
+        System.out.println("test");
     }
 }

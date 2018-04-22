@@ -5,6 +5,6 @@
         <li><a href="/admin/task/management">Управление заданиями</a></li>
     </ul>
     <ul class="nav nav-sidebar">
-        <li><a href="/">Заданные тесты</a></li>
+        <li><a href="/task">Заданные тесты</a></li>
     </ul>
 </div>

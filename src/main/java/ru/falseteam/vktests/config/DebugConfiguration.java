@@ -7,7 +7,6 @@ import ru.falseteam.vktests.entity.*;
 import ru.falseteam.vktests.repository.*;
 
 import java.util.Calendar;
-import java.util.Date;
 
 @Configuration
 public class DebugConfiguration {
@@ -177,6 +176,15 @@ public class DebugConfiguration {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MONTH, 1);
 
+        taskRepository.save(
+                Task.builder()
+                        .group(group)
+                        .test(test)
+                        .endTime(c.getTime())
+                        .build()
+        );
+
+        c.add(Calendar.MONTH, -2);
         taskRepository.save(
                 Task.builder()
                         .group(group)

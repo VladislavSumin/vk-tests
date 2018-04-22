@@ -1,6 +1,8 @@
 package ru.falseteam.vktests.entity;
 
 import lombok.*;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.Date;
