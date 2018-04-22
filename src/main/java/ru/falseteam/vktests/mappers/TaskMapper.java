@@ -7,10 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.falseteam.vktests.PageNotFoundException;
 import ru.falseteam.vktests.entity.*;
@@ -77,5 +74,18 @@ public class TaskMapper {
                         .build()
         );
         return "redirect:/admin/task/management";
+    }
+
+    @GetMapping("/info/{id}")
+    public String getTaskInfo(Model model, Authentication auth,
+                              @PathVariable Long id) {
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("user", user);
+
+        Task task = taskRepository.findById(id).orElseThrow(PageNotFoundException::new);
+        //TODO поправить
+        task.getTaskResults().forEach(taskResult -> task.getGroup().getUsers().remove(taskResult.getUser()));
+        model.addAttribute("task", task);
+        return "taskInfo";
     }
 }

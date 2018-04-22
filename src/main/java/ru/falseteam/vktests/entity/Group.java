@@ -3,10 +3,11 @@ package ru.falseteam.vktests.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @author Sumin Vladislav
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Getter
@@ -27,4 +28,7 @@ public class Group {
     @Column(nullable = false)
     //@Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    private Set<User> users;
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,4 +32,7 @@ public class Task {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
+
+    @OneToMany(mappedBy = "task")
+    private Set<TaskResult> taskResults;
 }
