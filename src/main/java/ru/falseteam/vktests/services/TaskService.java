@@ -11,11 +11,11 @@ import ru.falseteam.vktests.repository.TestQuestionRepository;
 import ru.falseteam.vktests.repository.UserRepository;
 
 import javax.annotation.PreDestroy;
-import javax.jws.soap.SOAPBinding;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
@@ -113,29 +113,21 @@ public class TaskService {
         }
         taskExecution.questions_id.remove(0);
         if (taskExecution.questions_id.size() == 0) {
-            Task task = taskRepository.findById(taskExecution.taskId).orElseThrow(PageNotFoundException::new);
-            taskResultRepository.save(
-                    TaskResult.builder()
-                            .user(user)
-                            .task(task)
-                            .countQuestions(taskExecution.countQuestion)
-                            .rightAnswers(taskExecution.rightAnswers)
-                            .build()
-            );
-            taskExecutions.remove(user.getId());
+            taskExecution.finish();
             return "redirect:/task";
         }
 
         return "redirect:/task/execution";
     }
 
-    private class TaskExecution implements Runnable {
+    private class TaskExecution {
         List<Long> questions_id = new LinkedList<>();
         int countQuestion;
         int rightAnswers = 0;
         long userId;
         long taskId;
         Date endTime;
+        boolean finished = false;
 
         TaskExecution(User user, Task task) {
             userId = user.getId();
@@ -150,17 +142,29 @@ public class TaskService {
 
             endTime = new Date(time1 < time2 ? time1 : time2);
 
+            scheduledExecutorService.schedule(this::finish, endTime.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
             taskExecutions.put(user.getId(), this);
-            //TODO удаление через 10 минут
-        }
-
-        @Override
-        public void run() {
-
         }
 
         TestQuestion getQuestion() {
             return testQuestionRepository.findById(questions_id.get(0)).orElseThrow(RuntimeException::new);
+        }
+
+        synchronized void finish() {
+            if (finished) return;
+            finished = true;
+
+            User user = userRepository.findById(userId).orElseThrow(RuntimeException::new);
+            Task task = taskRepository.findById(taskId).orElseThrow(RuntimeException::new);
+            taskResultRepository.save(
+                    TaskResult.builder()
+                            .user(user)
+                            .task(task)
+                            .countQuestions(countQuestion)
+                            .rightAnswers(rightAnswers)
+                            .build()
+            );
+            taskExecutions.remove(user.getId());
         }
     }
 }

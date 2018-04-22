@@ -1,4 +1,4 @@
-<div class="col-sm-3 col-md-2 sidebar">
+<div class="col-sm-3 col-md-2 sidebar" id="sidebar">
     <ul class="nav nav-sidebar">
         <li><a href="/admin/group/management">Управление группами</a></li>
         <li><a href="/admin/test/management">Управление тестами</a></li>

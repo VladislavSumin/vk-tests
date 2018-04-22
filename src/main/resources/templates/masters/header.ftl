@@ -3,6 +3,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
         <#--This need to create = button on small screen size-->
+            <#--<button type="button" class="navbar-toggle collapsed navbar-left" data-toggle="collapse" data-target="#sidebar"-->
+                    <#--aria-expanded="false" aria-controls="navbar">-->
+                <#--<span class="sr-only">Toggle navigation</span>-->
+                <#--<span class="icon-bar"></span>-->
+                <#--<span class="icon-bar"></span>-->
+                <#--<span class="icon-bar"></span>-->
+            <#--</button>-->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
