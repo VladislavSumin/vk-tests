@@ -9,12 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.falseteam.vktests.PageNotFoundException;
-import ru.falseteam.vktests.entity.*;
+import ru.falseteam.vktests.entity.Test;
+import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.TestQuestionRepository;
 import ru.falseteam.vktests.repository.TestRepository;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/test")
@@ -77,9 +77,6 @@ public class TestMapper {
 
         Test test = testRepository.findById(id).orElseThrow(PageNotFoundException::new);
         model.addAttribute("test", test);
-        Iterable<TestQuestion> questions = testQuestionRepository.findAllByTest(test);
-        model.addAttribute("questions", questions);
-
 
         return "testInfo";
     }

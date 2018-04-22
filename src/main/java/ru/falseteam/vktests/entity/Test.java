@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,4 +25,7 @@ public class Test {
     @Column(nullable = false)
     @Temporal(TemporalType.TIME)
     private Date timeLimit;
+
+    @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
+    private Set<TestQuestion> questions;
 }

@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="panel panel-default">
-        <#list questions as question>
+        <#list test.questions as question>
 
             <div class="panel-heading">${question.question}</div>
             <table class="table table-hover">

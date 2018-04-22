@@ -22,7 +22,7 @@
             <#assign x = 1>
             <#list tests as test>
             <#--TODO пофиксить жирный текст-->
-            <tr onclick="window.location.href='/admin/group/info/${test.id}'">
+            <tr onclick="window.location.href='/admin/test/info/${test.id}'">
                 <th scope="row">${x}</th>
                 <th style="font-weight:300">${test.name}</th>
                 <th style="font-weight:300">${test.timeLimit}</th>
