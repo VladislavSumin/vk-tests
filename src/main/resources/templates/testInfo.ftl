@@ -13,7 +13,7 @@
         <#list test.questions as question>
 
             <div class="panel-heading">${question.question}</div>
-            <table class="table table-hover">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -24,7 +24,7 @@
             <#assign x = 1>
                 <#list question.answers as answer>
                 <#--TODO пофиксить жирный текст-->
-                <tr>
+                <tr <#if answer.right == true>style="background-color: aquamarine" </#if>>
                     <th scope="row">${x}</th>
                     <th style="font-weight:300">${answer.answer}</th>
                 </tr>
