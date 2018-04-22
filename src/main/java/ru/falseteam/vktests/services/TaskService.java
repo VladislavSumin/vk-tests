@@ -47,13 +47,17 @@ public class TaskService {
         scheduledExecutorService.shutdownNow();
     }
 
+    private List<Task> getPossibleTasks(User user) {
+        List<Task> tasks = new LinkedList<>();
+        Iterable<Task> tasks_ = taskRepository.findAllByGroupAndEndTimeAfter(user.getGroup(), new Date());
+        tasks_.iterator().forEachRemaining(tasks::add);
+        taskResultRepository.findAllByUser(user).forEach(taskResult -> tasks.remove(taskResult.getTask()));
+        return tasks;
+    }
+
     public String getView(Model model, User user) {
         if (taskExecutions.get(user.getId()) == null) {
-            List<Task> tasks = new LinkedList<>();
-            Iterable<Task> tasks_ = taskRepository.findAllByGroupAndEndTimeAfter(user.getGroup(), new Date());
-            tasks_.iterator().forEachRemaining(tasks::add);
-            taskResultRepository.findAllByUser(user).forEach(taskResult -> tasks.remove(taskResult.getTask()));
-            model.addAttribute("tasks", tasks);
+            model.addAttribute("tasks", getPossibleTasks(user));
             return "taskList";
         }
         return "redirect:/task/execution";
@@ -61,7 +65,12 @@ public class TaskService {
 
     public String startTask(Long task_id, User user) {
         if (taskExecutions.get(user.getId()) != null) throw new PageNotFoundException();
-        Task task = taskRepository.findById(task_id).orElseThrow(PageNotFoundException::new);
+        List<Task> possibleTasks = getPossibleTasks(user);
+        Task task = possibleTasks
+                .stream()
+                .filter(task1 -> task1.getId() == task_id)
+                .findFirst()
+                .orElseThrow(PageNotFoundException::new);
         if (task.getEndTime().before(new Date())) throw new PageNotFoundException();
         new TaskExecution(user, task);
         return "redirect:/task/execution";
@@ -136,7 +145,10 @@ public class TaskService {
             Collections.shuffle(questions_id, new Random());
             countQuestion = questions_id.size();
 
-            endTime = new Date(System.currentTimeMillis() + task.getTest().getTimeLimit());
+            long time1 = System.currentTimeMillis() + task.getTest().getTimeLimit();
+            long time2 = task.getEndTime().getTime();
+
+            endTime = new Date(time1 < time2 ? time1 : time2);
 
             taskExecutions.put(user.getId(), this);
             //TODO удаление через 10 минут

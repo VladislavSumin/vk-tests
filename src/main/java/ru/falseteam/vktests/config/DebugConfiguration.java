@@ -174,7 +174,7 @@ public class DebugConfiguration {
         Group group = groupRepository.findById(3L).orElseThrow(RuntimeException::new);
 
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.MONTH, 1);
+        c.add(Calendar.MINUTE, 6);
 
         taskRepository.save(
                 Task.builder()
