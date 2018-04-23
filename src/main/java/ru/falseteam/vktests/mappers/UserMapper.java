@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/user")
-@Secured("ROLE_ADMIN")
+@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 public class UserMapper {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;

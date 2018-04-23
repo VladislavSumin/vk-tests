@@ -1,30 +1,26 @@
 package ru.falseteam.vktests.mappers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.falseteam.vktests.PageNotFoundException;
-import ru.falseteam.vktests.entity.*;
+import ru.falseteam.vktests.entity.Group;
+import ru.falseteam.vktests.entity.Task;
+import ru.falseteam.vktests.entity.Test;
+import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
 import ru.falseteam.vktests.repository.TaskRepository;
 import ru.falseteam.vktests.repository.TestRepository;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin/task")
-@Secured("ROLE_ADMIN")
+@Secured({"ROLE_ADMIN","ROLE_TEACHER"})
 public class TaskMapper {
     private final TaskRepository taskRepository;
 

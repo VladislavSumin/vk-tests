@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/admin/test")
-@Secured("ROLE_ADMIN")
+@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 public class TestMapper {
     private final TestRepository testRepository;
     private final TestQuestionRepository testQuestionRepository;
