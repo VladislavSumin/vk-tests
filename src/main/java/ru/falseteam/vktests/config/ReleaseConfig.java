@@ -9,7 +9,7 @@ import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
 import ru.falseteam.vktests.repository.UserRepository;
 
-@Configuration
+//@Configuration
 public class ReleaseConfig {
 
     @Autowired
