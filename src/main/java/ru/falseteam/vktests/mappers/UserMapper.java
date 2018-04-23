@@ -8,10 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.falseteam.vktests.AccessDennyException;
 import ru.falseteam.vktests.PageNotFoundException;
 import ru.falseteam.vktests.PasswordGenerator;
 import ru.falseteam.vktests.Translit;
 import ru.falseteam.vktests.entity.Group;
+import ru.falseteam.vktests.entity.Role;
 import ru.falseteam.vktests.entity.User;
 import ru.falseteam.vktests.repository.GroupRepository;
 import ru.falseteam.vktests.repository.UserRepository;
@@ -51,9 +53,13 @@ public class UserMapper {
 
     @PostMapping("/generate_password")
     @ResponseBody
-    public String postUserGeneratePassword(@RequestParam(name = "group_id") Long groupId) {
+    public String postUserGeneratePassword(@RequestParam(name = "group_id") Long groupId,
+                                           Authentication auth) {
         StringBuilder sb = new StringBuilder();
         Group group = groupRepository.findById(groupId).orElseThrow(PageNotFoundException::new);
+        if (group.getRole() == Role.ROLE_ADMIN) throw new AccessDennyException();
+        if (((User) auth.getPrincipal()).getGroup().getRole() == Role.ROLE_TEACHER && group.getRole() == Role.ROLE_TEACHER)
+            throw new AccessDennyException();
         userRepository.findAllByGroup(group).forEach(user -> {
             String password = PasswordGenerator.generatePassword(8);
             sb.append(user.getLastName()).append(' ')
@@ -72,9 +78,14 @@ public class UserMapper {
             @RequestParam(name = "lastName") String lastName,
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "soname") String soname,
-            @RequestParam(name = "group_id") Long groupId) {
-        Optional<Group> group = groupRepository.findById(groupId);
-        group.orElseThrow(PageNotFoundException::new);
+            @RequestParam(name = "group_id") Long groupId,
+            Authentication auth) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(PageNotFoundException::new);
+
+        if (group.getRole() == Role.ROLE_ADMIN) throw new AccessDennyException();
+        if (((User) auth.getPrincipal()).getGroup().getRole() == Role.ROLE_TEACHER && group.getRole() == Role.ROLE_TEACHER)
+            throw new AccessDennyException();
 
         String username = Translit.cyr2lat(lastName);
         User user = User.builder()
@@ -82,7 +93,7 @@ public class UserMapper {
                 .lastName(lastName)
                 .firstName(firstName)
                 .soname(soname)
-                .group(group.get())
+                .group(group)
                 .password("password_not_set")
                 .build();
         int addNumber = 1;
