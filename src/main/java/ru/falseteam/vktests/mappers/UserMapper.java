@@ -60,7 +60,7 @@ public class UserMapper {
                     .append(user.getFirstName()).append(' ')
                     .append(user.getSoname()).append(' ')
                     .append(user.getUsername()).append(' ')
-                    .append(password).append('\n');
+                    .append(password).append("<br>");
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         });
