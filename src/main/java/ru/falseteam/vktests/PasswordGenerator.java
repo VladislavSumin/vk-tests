@@ -15,7 +15,7 @@ public class PasswordGenerator {
     private static final String SPECIAL_CHARS = "!@#$%^&*_=+-/";
 
     public static String generatePassword(int len) {
-        return generatePassword(len, ALPHA_CAPS + ALPHA + ALPHA + NUMERIC);
+        return generatePassword(len, ALPHA + ALPHA + NUMERIC);
     }
 
     /**

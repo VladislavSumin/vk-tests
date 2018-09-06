@@ -18,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                 <#if logout>
-                    <div class="alert alert-info" role="alert">Вы были успешно деавторизованны</div>
+                    <div class="alert alert-info" role="alert">Вы вышли с сайта</div>
                 </#if>
                 <#if error>
                     <div class="alert alert-danger" role="alert">Не верное имя пользователя или пароль!</div>

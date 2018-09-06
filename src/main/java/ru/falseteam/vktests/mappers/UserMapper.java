@@ -61,7 +61,7 @@ public class UserMapper {
         if (((User) auth.getPrincipal()).getGroup().getRole() == Role.ROLE_TEACHER && group.getRole() == Role.ROLE_TEACHER)
             throw new AccessDennyException();
         userRepository.findAllByGroup(group).forEach(user -> {
-            String password = PasswordGenerator.generatePassword(8);
+            String password = PasswordGenerator.generatePassword(6);
             sb.append(user.getLastName()).append(' ')
                     .append(user.getFirstName()).append(' ')
                     .append(user.getSoname()).append(' ')

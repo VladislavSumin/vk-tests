@@ -14,13 +14,17 @@
     <@header/>
 <div class="container-fluid">
     <div class="row">
-        <#include "menu.ftl">
+        <#if user.group.role!="ROLE_USER">
+            <#include "menu.ftl">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <#else>
+        <div class="main">
+        </#if>
             <#nested>
         </div>
     </div>
 </div>
-    <#--<#include "footer.ftl">-->
+<#--<#include "footer.ftl">-->
 </body>
 
 </html>
