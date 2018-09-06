@@ -1,8 +1,6 @@
 spring:
   jpa:
     hibernate:
-      # TODO поменять на validate после тестов
-      ddl-auto: create
       use-new-id-generator-mappings: true
     # TODO посмотреть подробно что это
     open-in-view: true

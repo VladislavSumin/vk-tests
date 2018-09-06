@@ -1,6 +1,8 @@
 package ru.falseteam.vktests.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.falseteam.vktests.entity.*;
@@ -9,10 +11,12 @@ import ru.falseteam.vktests.repository.*;
 import java.util.Calendar;
 
 @Configuration
+@Log4j2
 public class DebugConfiguration {
 
     @Autowired
     public DebugConfiguration(
+            @Value("${vktests.createDbTemplate}") boolean createDBTemplate,
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
             GroupRepository groupRepository,
@@ -21,10 +25,12 @@ public class DebugConfiguration {
             TestQuestionAnswerRepository testQuestionAnswerRepository,
             TaskRepository taskRepository) {
 
+        if (!createDBTemplate) return;
+        log.info("Creating database template");
         createUsersAndGroups(passwordEncoder, userRepository, groupRepository);
         createTests(testRepository, testQuestionRepository, testQuestionAnswerRepository);
         createTasks(testRepository, groupRepository, taskRepository);
-
+        log.info("Database template created");
     }
 
     void createUsersAndGroups(
@@ -163,9 +169,6 @@ public class DebugConfiguration {
                         .question(question)
                         .isRight(false)
                         .build());
-
-        Test test2 = testRepository.findById(1L).orElseThrow(RuntimeException::new);
-        System.out.println("Время на выполнение теста: " + test2.getTimeLimit());
     }
 
 
@@ -192,10 +195,5 @@ public class DebugConfiguration {
                         .endTime(c.getTime())
                         .build()
         );
-
-        System.out.println("Календарь вернул: " + c.getTime());
-        Task task = taskRepository.findById(1L).orElseThrow(RuntimeException::new);
-        System.out.println("Бд вернула: " + task.getEndTime());
-
     }
 }
