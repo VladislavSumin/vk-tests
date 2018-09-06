@@ -14,9 +14,9 @@ public class RootMapper {
 
     @GetMapping("/")
     public String getIndex(Model model, Authentication auth) {
-        User user = (User) auth.getPrincipal();
-        model.addAttribute("user", user);
-        return "index";
+//        User user = (User) auth.getPrincipal();
+//        model.addAttribute("user", user);
+        return "redirect:/task";
     }
 
     @GetMapping("/login")
