@@ -58,9 +58,17 @@ public class TaskService {
     public String getView(Model model, User user) {
         if (taskExecutions.get(user.getId()) == null) {
             model.addAttribute("tasks", getPossibleTasks(user));
+            model.addAttribute("finished", getFinishedTask(user));
             return "taskList";
         }
         return "redirect:/task/execution";
+    }
+
+    private Object getFinishedTask(User user) {
+        List<TaskResult> finishedTask = new LinkedList<>();
+        Iterable<TaskResult> allByUser = taskResultRepository.findAllByUser(user);
+        allByUser.iterator().forEachRemaining(finishedTask::add);
+        return finishedTask;
     }
 
     public String startTask(Long task_id, User user) {

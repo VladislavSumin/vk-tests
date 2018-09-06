@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="panel panel-default">
-        <div class="panel-heading">Список заданий</div>
+        <div class="panel-heading">Текущие задания</div>
 
         <table class="table">
             <thead>
@@ -32,6 +32,34 @@
                         <input type="submit" name="submit" value="Начать">
                     </form>
                 </th>
+            </tr>
+                <#assign x++>
+            </#list>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Выполненые задания</div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название теста</th>
+                <th>Результат</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#assign x = 1>
+            <#list finished as finish>
+            <#--TODO пофиксить жирный текст-->
+            <tr>
+                <th scope="row">${x}</th>
+                <th style="font-weight:300">${finish.task.test.name}</th>
+                <th style="font-weight:300">${finish.rightAnswers}/${finish.countQuestions}</th>
             </tr>
                 <#assign x++>
             </#list>
