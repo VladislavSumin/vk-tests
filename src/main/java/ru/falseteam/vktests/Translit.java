@@ -1,6 +1,8 @@
 package ru.falseteam.vktests;
 //TODO fix this
 public class Translit {
+    //ГОСТ 7.79-2000 (Б)
+    // без `
     public static String cyr2lat(char ch){
         switch (ch){
             case 'а': return "a";
@@ -9,7 +11,7 @@ public class Translit {
             case 'г': return "g";
             case 'д': return "d";
             case 'е': return "e";
-            case 'ё': return "je";
+            case 'ё': return "yo";
             case 'ж': return "zh";
             case 'з': return "z";
             case 'и': return "i";
@@ -25,15 +27,15 @@ public class Translit {
             case 'т': return "t";
             case 'у': return "u";
             case 'ф': return "f";
-            case 'х': return "kh";
-            case 'ц': return "c";
+            case 'х': return "x";
+            case 'ц': return "cz";
             case 'ч': return "ch";
             case 'ш': return "sh";
-            case 'щ': return "jsh";
-            case 'ъ': return "hh";
-            case 'ы': return "ih";
-            case 'ь': return "jh";
-            case 'э': return "eh";
+            case 'щ': return "shh";
+            case 'ъ': return "";
+            case 'ы': return "y";
+            case 'ь': return "";
+            case 'э': return "e";
             case 'ю': return "ju";
             case 'я': return "ja";
             case 'А': return "A";
@@ -42,7 +44,7 @@ public class Translit {
             case 'Г': return "G";
             case 'Д': return "D";
             case 'Е': return "E";
-            case 'Ё': return "JE";
+            case 'Ё': return "YO";
             case 'Ж': return "ZH";
             case 'З': return "Z";
             case 'И': return "I";
@@ -58,15 +60,15 @@ public class Translit {
             case 'Т': return "T";
             case 'У': return "U";
             case 'Ф': return "F";
-            case 'Х': return "KH";
-            case 'Ц': return "C";
+            case 'Х': return "X";
+            case 'Ц': return "CZ";
             case 'Ч': return "CH";
             case 'Ш': return "SH";
-            case 'Щ': return "JSH";
-            case 'Ъ': return "HH";
-            case 'Ы': return "IH";
-            case 'Ь': return "JH";
-            case 'Э': return "EH";
+            case 'Щ': return "SHH";
+            case 'Ъ': return "";
+            case 'Ы': return "Y";
+            case 'Ь': return "";
+            case 'Э': return "E";
             case 'Ю': return "JU";
             case 'Я': return "JA";
             default: return String.valueOf(ch);
