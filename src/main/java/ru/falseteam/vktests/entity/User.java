@@ -1,8 +1,6 @@
 package ru.falseteam.vktests.entity;
 
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +10,7 @@ import java.util.Collections;
 
 /**
  * @author Sumin Vladislav
- * @version 1.4
+ * @version 1.5
  */
 @Getter
 @Setter
@@ -42,12 +40,11 @@ public class User implements UserDetails {
     private String soname;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Group group;
 
 
-    //    @Transient
-//    private List<GrantedAuthority> authorities = new ImmutableObservableList<>(Role.USER);
+    //@Transient
+    //private List<GrantedAuthority> authorities = new ImmutableObservableList<>(Role.USER);
     @Transient
     private boolean accountNonExpired = true;
     @Transient

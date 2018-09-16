@@ -27,9 +27,9 @@ public class TestQuestion {
     private String question;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Test test;
 
     @OneToMany(mappedBy = "question")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<TestQuestionAnswer> answers;
 }

@@ -34,5 +34,6 @@ public class Task {
     private Date endTime;
 
     @OneToMany(mappedBy = "task")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<TaskResult> taskResults;
 }

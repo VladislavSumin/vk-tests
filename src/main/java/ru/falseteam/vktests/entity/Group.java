@@ -1,13 +1,15 @@
 package ru.falseteam.vktests.entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
  * @author Sumin Vladislav
- * @version 1.2
+ * @version 1.3
  */
 @Entity
 @Getter
@@ -30,5 +32,6 @@ public class Group {
     private Role role;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users;
 }

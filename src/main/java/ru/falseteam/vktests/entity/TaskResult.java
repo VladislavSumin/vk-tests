@@ -5,7 +5,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -20,8 +19,7 @@ public class TaskResult {
     @Column(unique = true)
     private long id;
 
-    @OneToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
     private Task task;
 
     @OneToOne

@@ -3,6 +3,8 @@ package ru.falseteam.vktests.entity;
 import lombok.*;
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,5 +30,6 @@ public class Test {
     private long timeLimit;
 
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<TestQuestion> questions;
 }
